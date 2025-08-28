@@ -1,6 +1,7 @@
-# CNPJ Alfanumérico (SEFAZ/Serpro)
+# CNPJ Alfanumérico (SEFAZ)
 
-Validação e formatação de **CNPJ alfanumérico**: 12 caracteres alfanuméricos + **2 dígitos verificadores numéricos** calculados por **módulo 11** (pesos 2..9 da direita para a esquerda, cíclico). Mapeamento de caracteres: **valor = `ord(ch) - 48`**.
+Validação e formatação de **CNPJ alfanumérico**: 12 caracteres alfanuméricos + **2 dígitos verificadores numéricos** calculados por **módulo 11** (pesos 2..9 da direita para a esquerda, cíclico).  
+Mapeamento de caracteres: **valor = `ord(ch) - 48`**.
 
 ## Instalação
 
@@ -29,18 +30,25 @@ $fmt = CnpjAlfa::format('12abc34501de35');   // "12.ABC.345/01DE-35"
 [$dv1, $dv2] = CnpjAlfa::computeDv('12ABC34501DE'); // [int, int]
 ```
 
-CLI de demo:
+## CLI de demonstração
 
 ```bash
 php bin/demo "12ABC34501DE35" "59.952.259/0001-85"
 ```
 
+Saída esperada:
+
+```
+[OK] 12.ABC.345/01DE-35
+[OK] 59.952.259/0001-85
+```
+
 ## Regras (resumo)
 
-- Corpo: **12** chars `[A-Z0-9]`
-- DV1: módulo 11 aplicando pesos `2..9` **da direita p/ esquerda**.
-- DV2: repete com os **13** (12 + DV1).
-- Dígitos finais **devem** ser numéricos.
+- Corpo: **12** caracteres `[A-Z0-9]`
+- DV1: módulo 11 aplicando pesos `2..9` da direita para a esquerda.
+- DV2: repete o cálculo com os **13** primeiros (12 + DV1).
+- Dígitos finais devem ser numéricos.
 
 ## Testes
 

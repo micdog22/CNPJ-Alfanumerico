@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+
+use MicDog\CnpjAlfa\CnpjAlfa;
+
+$tests = $argv;
+array_shift($tests); // remove script name
+
+if (empty($tests)) {
+    $tests = [
+        "00.000.000/0001-91",
+        "59.952.259/0001-85",
+        "12ABC34501DE35",
+        "12aBc34501DE35",
+    ];
+}
+
+foreach ($tests as $t) {
+    $ok = CnpjAlfa::validate($t);
+    $fmt = CnpjAlfa::format($t);
+    echo sprintf("[%s] %s\n", $ok ? "OK" : "NO", $fmt);
+}
